@@ -1,5 +1,5 @@
 # Scritpt Genlisea aurea #
-# 21/09/2021 #
+# 22/09/2021 #
 
 ## Carregagar as bibliotecas instaladas ##
 
@@ -21,7 +21,7 @@ sp_input$species <-
 
 ## Carregando as variáveis ambientais
 
-lista_arquivos <- list.files("./dados/raster/AmbData_Brasil/", full.names = T, pattern = ".asc")
+lista_arquivos <- list.files("./dados/raster/WorldClim/", full.names = T, pattern = ".tif")
 
 vars_stack <-stack(lista_arquivos)
 
@@ -51,7 +51,7 @@ setup_sdmdata_1 <- setup_sdmdata(species_name = unique(sp_input[1]),
                                  seed = 512,
                                  buffer_type = "mean",
                                  png_sdmdata = TRUE,
-                                 n_back = 50,
+                                 n_back = 100,
                                  clean_dupl = TRUE,
                                  clean_uni = TRUE,
                                  clean_nas = TRUE,
@@ -99,9 +99,7 @@ many <- do_many(species_name = unique(sp_input[1]),
 final_model <- final_model(species_name = unique(sp_input[1]),
                            algorithms = NULL, #if null it will take all the algorithms in disk
                            models_dir = "./resultados",
-                           which_models = c("raw_mean_th"),
-                           mean_th_par = c("spec_sens"),
-                           sensitivity = 0.9,
+                           which_models = c("raw_mean","bin_consensus"),
                            consensus_level = 0.5,
                            uncertainty = FALSE,
                            scale_models = TRUE,
@@ -113,9 +111,10 @@ final_model <- final_model(species_name = unique(sp_input[1]),
 ens <- ensemble_model(
   species_name = unique(sp_input[1]),
   occurrences = sp_input,
-  which_ensemble = c("average"),
+  which_ensemble = c("best"),
   consensus_level = 0.5,
-  which_final = "raw_mean", "bin_consensus",
+  which_final = "raw_mean",
+  performance_metric = "AUC",
   png_ensemble = TRUE,
   write_png = TRUE,
   scale_models = TRUE,

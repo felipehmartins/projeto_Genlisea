@@ -1,4 +1,4 @@
-# Scritpt Genlisea lobata #
+# Scritpt Genlisea tuberosa #
 # 22/09/2021 #
 
 ## Carregagar as bibliotecas instaladas ##
@@ -11,7 +11,7 @@ library(raster)
 ## NO argumento "file" coloque o caminho relativo do arquivo .csv , no arquivo "sep" indique qual ##
 ## o tipo de separado dos campos (o que separa as colunas). ##
 
-sp_input <- read.csv(file = "./dados/ocorrencias/sp_input_Genlisea_lobata.csv", sep = ",")
+sp_input <- read.csv(file = "./dados/ocorrencias/sp_input_Genlisea_tuberosa.csv", sep = ",")
 
 ## Colocando no formato exigido pelo pacote: species name separated by "_" 
 sp_input$species <-
